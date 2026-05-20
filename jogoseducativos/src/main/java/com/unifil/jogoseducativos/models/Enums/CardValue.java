@@ -1,10 +1,7 @@
 package com.unifil.jogoseducativos.models.Enums;
 
-import lombok.Getter;
-
-@Getter
 public enum CardValue {
-    AS(1, 11),
+    ACE(1, 11),
     TWO(2, 2),
     THREE(3, 3),
     FOUR(4, 4),
@@ -18,11 +15,11 @@ public enum CardValue {
     QUEEN(10, 10),
     KING(10, 10);
 
-    private final int valorMinimo;
-    private final int valorMaximo;
+    private final int minValue;
+    private final int maxValue;
 
-    CardValue(int valorMinimo, int valorMaximo) {
-        this.valorMinimo = valorMinimo;
-        this.valorMaximo = valorMaximo;
+    CardValue(int minValue, int maxValue) {
+        this.minValue = minValue;
+        this.maxValue = maxValue;
     }
 }
