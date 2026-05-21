@@ -1,5 +1,8 @@
 package com.unifil.jogoseducativos.models.Enums;
 
+import lombok.Getter;
+
+@Getter
 public enum CardValue {
     ACE(1, 11),
     TWO(2, 2),

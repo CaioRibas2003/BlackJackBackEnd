@@ -20,9 +20,8 @@ public class PlayerController {
         return ResponseEntity.ok(playerService.createPlayer(playerDtoRequest));
     }
 
-    @GetMapping
-    public ResponseEntity<PlayerDtoResponse> findById(@PathVariable Long id){
-
+    @GetMapping("/{id}")
+    public ResponseEntity<PlayerDtoResponse> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(playerService.findById(id));
     }
 }
