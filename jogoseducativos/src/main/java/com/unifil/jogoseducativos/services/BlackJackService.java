@@ -8,7 +8,6 @@ import com.unifil.jogoseducativos.models.Enums.Suit;
 import com.unifil.jogoseducativos.models.Player;
 import com.unifil.jogoseducativos.repositories.PlayerRepository;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -160,13 +159,13 @@ public class BlackJackService {
         if (session == null) throw new RuntimeException("No active session for this player");
         if (session.getStatus() != GameStatus.DEALER_TURN) throw new RuntimeException("It's not dealer's turn");
 
-        Player player = playerRepository.findById(playerId)
-                .orElseThrow(() -> new RuntimeException("Player not found"));
-
-        session.getDealerCards().add(drawCard(session.getDeck()));
-
         int dealerScore = calculateScore(session.getDealerCards());
         int playerScore = calculateScore(session.getPlayerCards());
+
+        if (dealerScore < 17) {
+            session.getDealerCards().add(drawCard(session.getDeck()));
+            dealerScore = calculateScore(session.getDealerCards());
+        }
 
         if (dealerScore >= 17) {
             if (dealerScore > 21 || playerScore > dealerScore) {
@@ -180,7 +179,10 @@ public class BlackJackService {
             }
         }
 
-        return buildResponse(session, player);
+        Player updatedPlayer = playerRepository.findById(playerId)
+                .orElseThrow(() -> new RuntimeException("Player not found"));
+
+        return buildResponse(session, updatedPlayer);
     }
 
     @Data
